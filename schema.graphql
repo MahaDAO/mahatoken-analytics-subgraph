@@ -1,18 +1,21 @@
 type DayData @entity {
   id: ID! # timestamp rounded to current day by dividing by 86400
+  contract: String!
   date: BigInt!
   walletCount: BigInt!
   txCount: BigInt!
 }
 
-type FinalData @entity {
+type MasterData @entity {
   id: ID! # timestamp rounded to current day by dividing by 86400
+  contract: String!
   walletCount: BigInt!
   txCount: BigInt!
 }
 
 type Wallet @entity {
   id: ID!
+  contract: String!
   address: String!
   balance: BigInt!
   txCount: BigInt!

@@ -2,7 +2,7 @@ import { Transfer } from "../generated/MahaDAO/MahaDAO";
 import {
   EXP_18,
   fetchDayData,
-  fetchFinalData,
+  fetchMasterData,
   ZERO_BI,
   fetchWallet,
   ONE_BI,
@@ -12,12 +12,14 @@ export function handleTransfer(event: Transfer): void {
   let timestamp = event.block.timestamp.toI32();
   let dayID = timestamp / 86400;
 
-  const finalData = fetchFinalData();
-  const dayData = fetchDayData(dayID);
+  const contract = event.address.toString();
+
+  const finalData = fetchMasterData(contract);
+  const dayData = fetchDayData(dayID, contract);
 
   // update balances
-  const from = fetchWallet(event.params.from);
-  const to = fetchWallet(event.params.to);
+  const from = fetchWallet(event.params.from, contract);
+  const to = fetchWallet(event.params.to, contract);
   const val = event.params.value;
 
   const beforeFromBalance = from.balance;

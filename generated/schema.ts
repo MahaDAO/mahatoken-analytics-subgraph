@@ -42,6 +42,15 @@ export class DayData extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get contract(): string {
+    let value = this.get("contract");
+    return value.toString();
+  }
+
+  set contract(value: string) {
+    this.set("contract", Value.fromString(value));
+  }
+
   get date(): BigInt {
     let value = this.get("date");
     return value.toBigInt();
@@ -70,7 +79,7 @@ export class DayData extends Entity {
   }
 }
 
-export class FinalData extends Entity {
+export class MasterData extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -78,17 +87,17 @@ export class FinalData extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save FinalData entity without an ID");
+    assert(id !== null, "Cannot save MasterData entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save FinalData entity with non-string ID. " +
+      "Cannot save MasterData entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("FinalData", id.toString(), this);
+    store.set("MasterData", id.toString(), this);
   }
 
-  static load(id: string): FinalData | null {
-    return store.get("FinalData", id) as FinalData | null;
+  static load(id: string): MasterData | null {
+    return store.get("MasterData", id) as MasterData | null;
   }
 
   get id(): string {
@@ -98,6 +107,15 @@ export class FinalData extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get contract(): string {
+    let value = this.get("contract");
+    return value.toString();
+  }
+
+  set contract(value: string) {
+    this.set("contract", Value.fromString(value));
   }
 
   get walletCount(): BigInt {
@@ -147,6 +165,15 @@ export class Wallet extends Entity {
 
   set id(value: string) {
     this.set("id", Value.fromString(value));
+  }
+
+  get contract(): string {
+    let value = this.get("contract");
+    return value.toString();
+  }
+
+  set contract(value: string) {
+    this.set("contract", Value.fromString(value));
   }
 
   get address(): string {

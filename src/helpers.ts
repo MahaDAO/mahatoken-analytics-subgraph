@@ -1,16 +1,16 @@
 import { BigInt, Address } from "@graphprotocol/graph-ts";
-import { DayData, FinalData, Wallet } from "../generated/schema";
+import { DayData, MasterData, Wallet } from "../generated/schema";
 
 export let ZERO_BI = BigInt.fromI32(0);
 export let ONE_BI = BigInt.fromI32(1);
 export let BI_18 = BigInt.fromI32(18);
 export let EXP_18 = BigInt.fromString("1000000000000000000");
 
-export function fetchFinalData(): FinalData | null {
-  let data = FinalData.load("1");
+export function fetchMasterData(contract: string): MasterData | null {
+  let data = MasterData.load(contract);
 
   if (data == null) {
-    data = new FinalData("1");
+    data = new MasterData(contract);
     data.txCount = ZERO_BI;
     data.walletCount = ZERO_BI;
     data.save();
@@ -20,13 +20,19 @@ export function fetchFinalData(): FinalData | null {
   return data;
 }
 
-export function fetchWallet(tokenAddress: Address): Wallet | null {
-  let wallet = Wallet.load(tokenAddress.toHexString());
+export function fetchWallet(
+  tokenAddress: Address,
+  contract: string
+): Wallet | null {
+  const id = `${tokenAddress.toString()}:${contract}`;
+
+  let wallet = Wallet.load(id);
 
   if (wallet == null) {
-    wallet = new Wallet(tokenAddress.toHexString());
+    wallet = new Wallet(id);
     wallet.balance = ZERO_BI;
     wallet.txCount = ZERO_BI;
+    wallet.contract = contract;
     wallet.address = tokenAddress.toHexString();
     wallet.save();
     return wallet;
@@ -35,16 +41,18 @@ export function fetchWallet(tokenAddress: Address): Wallet | null {
   return wallet;
 }
 
-export function fetchDayData(dayID: number): DayData | null {
-  let dayData = DayData.load(dayID.toString());
+export function fetchDayData(dayID: number, contract: string): DayData | null {
+  const id = `${dayID.toString()}:${contract}`;
+  let dayData = DayData.load(id);
 
   if (dayData === null) {
     let dayStartTimestamp = BigInt.fromI32((dayID * 86400) as i32);
 
-    dayData = new DayData(dayID.toString());
+    dayData = new DayData(id);
     dayData.date = dayStartTimestamp;
     dayData.walletCount = ZERO_BI;
     dayData.txCount = ZERO_BI;
+    dayData.contract = contract;
     dayData.save();
     return dayData;
   }
