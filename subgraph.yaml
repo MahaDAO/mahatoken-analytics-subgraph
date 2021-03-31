@@ -22,3 +22,23 @@ dataSources:
         - event: Transfer(indexed address,indexed address,uint256)
           handler: handleTransfer
       file: ./src/mapping.ts
+  - kind: ethereum/contract
+    name: ARTHv1
+    network: mainnet
+    source:
+      address: "0x0e3cc2c4fb9252d17d07c67135e48536071735d9"
+      abi: MahaDAO
+      startBlock: 11666708
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      entities:
+        - Transfer
+      abis:
+        - name: MahaDAO
+          file: ./abis/MahaDAO.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+      file: ./src/mapping.ts
