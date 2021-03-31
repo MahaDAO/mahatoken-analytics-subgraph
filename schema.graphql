@@ -1,6 +1,18 @@
-type ExampleEntity @entity {
+type DayData @entity {
+  id: ID! # timestamp rounded to current day by dividing by 86400
+  date: Int!
+  walletCount: Int!
+  txCount: Int!
+}
+
+type FinalData @entity {
+  id: ID! # timestamp rounded to current day by dividing by 86400
+  walletCount: Int!
+  txCount: Int!
+}
+
+type Wallet @entity {
   id: ID!
-  count: BigInt!
-  owner: Bytes! # address
-  spender: Bytes! # address
+  balance: BigInt!
+  txCount: Int!
 }

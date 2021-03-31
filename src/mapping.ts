@@ -1,91 +1,32 @@
-import { BigInt } from "@graphprotocol/graph-ts"
-import {
-  MahaDAO,
-  Approval,
-  Paused,
-  RoleAdminChanged,
-  RoleGranted,
-  RoleRevoked,
-  Transfer,
-  Unpaused
-} from "../generated/MahaDAO/MahaDAO"
-import { ExampleEntity } from "../generated/schema"
+import { BigInt } from "@graphprotocol/graph-ts";
+import { Approval, Transfer } from "../generated/MahaDAO/MahaDAO";
+import { DayData, FinalData } from "../generated/schema";
+import { fetchDayData, fetchWallet, ZERO_BD } from "./helpers";
 
-export function handleApproval(event: Approval): void {
-  // Entities can be loaded from the store using a string ID; this ID
-  // needs to be unique across all entities of the same type
-  let entity = ExampleEntity.load(event.transaction.from.toHex())
+export function handleApproval(event: Approval): void {}
 
-  // Entities only exist after they have been saved to the store;
-  // `null` checks allow to create entities on demand
-  if (entity == null) {
-    entity = new ExampleEntity(event.transaction.from.toHex())
+export function handleTransfer(event: Transfer): void {
+  let timestamp = event.block.timestamp.toI32();
+  let dayID = timestamp / 86400;
 
-    // Entity fields can be set using simple assignments
-    entity.count = BigInt.fromI32(0)
-  }
+  let finalData = FinalData.load("1");
+  const dayData = fetchDayData(dayID);
 
-  // BigInt and BigDecimal math are supported
-  entity.count = entity.count + BigInt.fromI32(1)
+  // update balances
+  const from = fetchWallet(event.params.from);
+  const to = fetchWallet(event.params.from);
+  const val = event.params.value;
 
-  // Entity fields can be set based on event parameters
-  entity.owner = event.params.owner
-  entity.spender = event.params.spender
+  from.txCount += 1;
+  to.txCount += 1;
 
-  // Entities can be written to the store with `.save()`
-  entity.save()
+  if (from.balance.ge(val)) from.balance = from.balance.minus(val);
+  to.balance = to.balance.plus(val);
 
-  // Note: If a handler doesn't require existing field values, it is faster
-  // _not_ to load the entity from the store. Instead, create it fresh with
-  // `new Entity(...)`, set the fields that should be updated and save the
-  // entity back to the store. Fields that were not set or unset remain
-  // unchanged, allowing for partial updates to be applied.
+  // from.balance = from.balance - val;
+  // to.balance += val;
 
-  // It is also possible to access smart contracts from mappings. For
-  // example, the contract that has emitted the event can be connected to
-  // with:
-  //
-  // let contract = Contract.bind(event.address)
-  //
-  // The following functions can then be called on this contract to access
-  // state variables and other data:
-  //
-  // - contract.DEFAULT_ADMIN_ROLE(...)
-  // - contract.MINTER_ROLE(...)
-  // - contract.PAUSER_ROLE(...)
-  // - contract.allowance(...)
-  // - contract.approve(...)
-  // - contract.balanceOf(...)
-  // - contract.contactInformation(...)
-  // - contract.decimals(...)
-  // - contract.decreaseAllowance(...)
-  // - contract.deprecated(...)
-  // - contract.getRoleAdmin(...)
-  // - contract.getRoleMember(...)
-  // - contract.getRoleMemberCount(...)
-  // - contract.hasRole(...)
-  // - contract.increaseAllowance(...)
-  // - contract.link(...)
-  // - contract.name(...)
-  // - contract.paused(...)
-  // - contract.reason(...)
-  // - contract.symbol(...)
-  // - contract.totalSupply(...)
-  // - contract.transfer(...)
-  // - contract.transferFrom(...)
-  // - contract.upgradedAddress(...)
-  // - contract.url(...)
-  // - contract.website(...)
+  dayData.walletCount += finalData.walletCount;
+  dayData.txCount += 1;
+  dayData.save();
 }
-
-export function handlePaused(event: Paused): void {}
-
-export function handleRoleAdminChanged(event: RoleAdminChanged): void {}
-
-export function handleRoleGranted(event: RoleGranted): void {}
-
-export function handleRoleRevoked(event: RoleRevoked): void {}
-
-export function handleTransfer(event: Transfer): void {}
-
-export function handleUnpaused(event: Unpaused): void {}
