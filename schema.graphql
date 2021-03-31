@@ -1,18 +1,18 @@
 type DayData @entity {
   id: ID! # timestamp rounded to current day by dividing by 86400
-  date: Int!
-  walletCount: Int!
-  txCount: Int!
+  date: BigInt!
+  walletCount: BigInt!
+  txCount: BigInt!
 }
 
 type FinalData @entity {
   id: ID! # timestamp rounded to current day by dividing by 86400
-  walletCount: Int!
-  txCount: Int!
+  walletCount: BigInt!
+  txCount: BigInt!
 }
 
 type Wallet @entity {
   id: ID!
   balance: BigInt!
-  txCount: Int!
+  txCount: BigInt!
 }

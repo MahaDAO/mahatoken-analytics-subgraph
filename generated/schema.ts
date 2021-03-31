@@ -42,31 +42,31 @@ export class DayData extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get date(): i32 {
+  get date(): BigInt {
     let value = this.get("date");
-    return value.toI32();
+    return value.toBigInt();
   }
 
-  set date(value: i32) {
-    this.set("date", Value.fromI32(value));
+  set date(value: BigInt) {
+    this.set("date", Value.fromBigInt(value));
   }
 
-  get walletCount(): i32 {
+  get walletCount(): BigInt {
     let value = this.get("walletCount");
-    return value.toI32();
+    return value.toBigInt();
   }
 
-  set walletCount(value: i32) {
-    this.set("walletCount", Value.fromI32(value));
+  set walletCount(value: BigInt) {
+    this.set("walletCount", Value.fromBigInt(value));
   }
 
-  get txCount(): i32 {
+  get txCount(): BigInt {
     let value = this.get("txCount");
-    return value.toI32();
+    return value.toBigInt();
   }
 
-  set txCount(value: i32) {
-    this.set("txCount", Value.fromI32(value));
+  set txCount(value: BigInt) {
+    this.set("txCount", Value.fromBigInt(value));
   }
 }
 
@@ -100,22 +100,22 @@ export class FinalData extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get walletCount(): i32 {
+  get walletCount(): BigInt {
     let value = this.get("walletCount");
-    return value.toI32();
+    return value.toBigInt();
   }
 
-  set walletCount(value: i32) {
-    this.set("walletCount", Value.fromI32(value));
+  set walletCount(value: BigInt) {
+    this.set("walletCount", Value.fromBigInt(value));
   }
 
-  get txCount(): i32 {
+  get txCount(): BigInt {
     let value = this.get("txCount");
-    return value.toI32();
+    return value.toBigInt();
   }
 
-  set txCount(value: i32) {
-    this.set("txCount", Value.fromI32(value));
+  set txCount(value: BigInt) {
+    this.set("txCount", Value.fromBigInt(value));
   }
 }
 
@@ -158,12 +158,12 @@ export class Wallet extends Entity {
     this.set("balance", Value.fromBigInt(value));
   }
 
-  get txCount(): i32 {
+  get txCount(): BigInt {
     let value = this.get("txCount");
-    return value.toI32();
+    return value.toBigInt();
   }
 
-  set txCount(value: i32) {
-    this.set("txCount", Value.fromI32(value));
+  set txCount(value: BigInt) {
+    this.set("txCount", Value.fromBigInt(value));
   }
 }
