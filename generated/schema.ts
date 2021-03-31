@@ -149,6 +149,15 @@ export class Wallet extends Entity {
     this.set("id", Value.fromString(value));
   }
 
+  get address(): string {
+    let value = this.get("address");
+    return value.toString();
+  }
+
+  set address(value: string) {
+    this.set("address", Value.fromString(value));
+  }
+
   get balance(): BigInt {
     let value = this.get("balance");
     return value.toBigInt();

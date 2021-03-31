@@ -1,13 +1,13 @@
 {
-  "name": "token-analytics",
+  "name": "mahaanalytics",
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ senamakel/token-analytics",
-    "create-local": "graph create --node http://localhost:8020/ senamakel/token-analytics",
-    "remove-local": "graph remove --node http://localhost:8020/ senamakel/token-analytics",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 senamakel/token-analytics"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ senamakel/mahaanalytics",
+    "create-local": "graph create --node http://localhost:8020/ senamakel/mahaanalytics",
+    "remove-local": "graph remove --node http://localhost:8020/ senamakel/mahaanalytics",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 senamakel/mahaanalytics"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.20.0",

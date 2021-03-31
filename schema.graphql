@@ -13,6 +13,7 @@ type FinalData @entity {
 
 type Wallet @entity {
   id: ID!
+  address: String!
   balance: BigInt!
   txCount: BigInt!
 }
